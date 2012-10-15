@@ -1,0 +1,8 @@
+用于从manhua.178.com上面下载漫画的脚本。
+
+命令行版本：
+	mangaD.py直接执行，命令见-h
+GUI版本：
+	Qt完成的GUI，依赖pySide，支持Macos，Linux，Windows.
+	执行manga.py
+	简易版，没有容错没有容错。
