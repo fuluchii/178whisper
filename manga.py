@@ -6,8 +6,17 @@ from PySide.QtGui import (QApplication,QDesktopWidget,QMessageBox,QFileDialog,QF
 from PySide.QtUiTools import QUiLoader
 from mangaD import get_downloader
 import urllib
+import threading
 
 __folder__ = os.path.dirname(os.path.abspath(__file__))
+
+class DownloadThered(threading.Thread):
+	def __init__(self,task):
+		threading.Thread.__init__(self)
+		self.task = task
+
+	def run(self):
+		self.task()
 
 class DownLoader:
 	def __init__(self):
@@ -49,7 +58,8 @@ class DownLoader:
 		self.my_url_edit.setText(first_url)
 		self.downloader.set_url(root_url,first_url)
 		self.downloader.set_count(int(self.my_vol_edit.text()))
-		self.downloader.start()
+		t = DownloadThered(self.downloader.start)
+		t.start()
 
 
 	def url_error(self):
