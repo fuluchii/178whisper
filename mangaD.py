@@ -103,11 +103,12 @@ class Manager:
 
     def set_path(self,root_path):
         self.root_path = root_path
+    def set_count(self,count):
+        self.d_count = count
 
 
-
-    def start(self,d_count=1):
-        download_count = d_count
+    def start(self):
+        download_count = self.d_count
         count = 1
         if not os.path.exists(self.root_path):
             os.mkdir(self.root_path)

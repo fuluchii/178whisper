@@ -26,12 +26,11 @@ class DownLoader:
 
 
 	def filebutton_click(self):
-		root_path= QFileDialog.getExistingDirectory(self.main_window,u'test',os.getcwd())[0]
+		root_path= QFileDialog.getExistingDirectory(self.main_window,u'test',os.getcwd())
 		self.downloader.set_path(root_path)
 		self.my_file_edit.setText(root_path)
 		print root_path
 
-	def volbutton_click(self):
 		
 
 	def startbutton_click(self):
@@ -49,6 +48,7 @@ class DownLoader:
 		first_url = url[index+1:]
 		self.my_url_edit.setText(first_url)
 		self.downloader.set_url(root_url,first_url)
+		self.downloader.set_count(int(self.my_vol_edit.text()))
 		self.downloader.start()
 
 
