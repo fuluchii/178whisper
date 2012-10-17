@@ -23,9 +23,10 @@ class WorkGreenlet(threading.Thread):
         self.tasks = tasks
 
     def run(self):
-        t = self.tasks.get()
-        t()
-        self.tasks.task_done()
+        while not self.tasks.empty():     
+            t = self.tasks.get()
+            t()
+            self.tasks.task_done()
 
 class Spider:
     def __init__(self,max_worker):
@@ -76,6 +77,7 @@ class Manager:
         while True:
             try:
                 first_chapter = urllib.urlopen(url)
+                soup = first_chapter.read()
                 soup = BeautifulSoup.BeautifulSoup(first_chapter,'lxml')
                 break
             except Exception,e:
@@ -90,13 +92,15 @@ class Manager:
             try:
                 print url
                 chapter = urllib.urlopen(url)
-                soup = BeautifulSoup.BeautifulSoup(chapter)
+                soup = chapter.read()
+                #soup = BeautifulSoup.BeautifulSoup(chapter)
             except Exception,e:
-                print chapter.read()
-            next_chapter_link = soup('a',{'id':'next_chapter'})
+                print('test')
+            print soup
+            next_chapter_link = re.findall("<a id=\"next_chapter\" href=\"86.shtml\">第369话</a>",soup)[0]
             print next_chapter_link
             yield next_chapter_link
-            url = root_url + next_chapter_link[0]['href']
+            url = root_url + next_chapter_link
     def set_url(self,root_url,first_url):
         self.root_url = root_url
         self.first_url = first_url

@@ -72,7 +72,7 @@ def main():
 	app = QApplication(sys.argv)
 	d = DownLoader()
 	d.main_window.show()
-	app.exec_()
+	sys.exit(app.exec_())
 
 if __name__ == "__main__":
 	main()
