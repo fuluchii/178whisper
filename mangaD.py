@@ -23,7 +23,7 @@ class WorkGreenlet(threading.Thread):
         self.tasks = tasks
 
     def run(self):
-        while not self.tasks.empty():     
+        while not self.tasks.empty():
             t = self.tasks.get()
             t()
             self.tasks.task_done()
@@ -92,15 +92,14 @@ class Manager:
             try:
                 print url
                 chapter = urllib.urlopen(url)
-                soup = chapter.read()
-                #soup = BeautifulSoup.BeautifulSoup(chapter)
+                # soup = chapter.read()
+                soup = BeautifulSoup.BeautifulSoup(chapter)
             except Exception,e:
-                print('test')
-            print soup
-            next_chapter_link = re.findall("<a id=\"next_chapter\" href=\"86.shtml\">第369话</a>",soup)[0]
+                print chapter.read()
+            next_chapter_link = soup('a',{'id':'next_chapter'})
             print next_chapter_link
             yield next_chapter_link
-            url = root_url + next_chapter_link
+            url = root_url + next_chapter_link[0]['href']
     def set_url(self,root_url,first_url):
         self.root_url = root_url
         self.first_url = first_url
